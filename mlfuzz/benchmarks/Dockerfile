@@ -1,4 +1,5 @@
-FROM ubuntu:20.04
+# 22.04 now instead of 20.04
+FROM ubuntu:22.04
 
 ENV MOUNT_PATH "/targets"
 # AFL++ is default fuzzer
@@ -26,7 +27,6 @@ RUN update-alternatives --install /usr/bin/clangd clangd /usr/bin/clangd-12 100 
     && update-alternatives --install /usr/bin/clang++ clang++ /usr/bin/clang++-12 100 \
     && update-alternatives --install /usr/bin/llvm-config llvm-config /usr/bin/llvm-config-12 100
 
-# Nah
 # Download and compile afl
 RUN git clone https://github.com/google/AFL /afl && \
     cd /afl && \
@@ -45,10 +45,10 @@ RUN cd /afl && unset CFLAGS && unset CXXFLAGS \
     && cd llvm_mode && make
 
 # Download and compile afl++
-# Using old version just to make sure it works
+# This newer commit requires patch to neuzz++'s mutator
 RUN git clone https://github.com/AFLplusplus/AFLplusplus.git /aflpp && \
     cd /aflpp && \
-    git checkout 9e2a94532b7fd5191de905a8464176114ee7d258
+    git checkout b449e4c544eaac1a0a9b7d1f2f15d5921907585e
 
 # Build without Python support as we don't need it
 # Set AFL_NO_X86 to skip flaky tests
@@ -57,6 +57,7 @@ RUN cd /aflpp && unset CFLAGS && unset CXXFLAGS && \
     PYTHON_INCLUDE=/ make && make install && \
     make -C utils/aflpp_driver && \
     cp utils/aflpp_driver/libAFLDriver.a /
-# old cmake doesn't work?
-RUN pip3 install cmake --upgrade
+
+# Workaround for some ninja duplicate rules thing on 20.04. Probably not necessary now
+# RUN pip3 install cmake --upgrade
 COPY . /scripts
