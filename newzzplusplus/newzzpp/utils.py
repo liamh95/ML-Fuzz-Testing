@@ -28,7 +28,7 @@ from torch.nn.utils.rnn import pad_sequence
 
 logger = logging.getLogger(__name__)
 
-
+# TODO: Just move this to model.py?
 class EarlyStopping:
     def __init__(self, patience: int=5, delta: float=0.0):
         self.patience = patience

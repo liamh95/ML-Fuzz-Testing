@@ -8,7 +8,7 @@ ENV FUZZER = "aflpp"
 RUN apt-get update \
     # adding groff for soelim to let openldap build?
     && DEBIAN_FRONTEND=noninteractive apt-get install -y \
-	    git wget build-essential python3 make libstdc++-7-dev clang libz-dev autotools-dev \
+	    git wget build-essential python3 make libstdc++-12-dev clang libz-dev autotools-dev \
         automake autoconf autoconf-archive libtool libarchive-dev cmake nasm libpng-dev \
         ragel libglib2.0-dev golang-go curl libbz2-dev libxml2-dev libgss-dev \
         libssl-dev liblzma-dev subversion  libgcrypt20-dev ninja-build g++  nano \
