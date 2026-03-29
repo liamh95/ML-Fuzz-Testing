@@ -60,4 +60,27 @@ def predict_coverage(model: MLP, inputs: List[np.ndarray]) -> np.ndarray:
 
 
 
+class EarlyStopping:
+    def __init__(self, patience: int=5, delta: float=0.0):
+        self.patience = patience
+        self.delta = delta
+        self.best_score = None
+        self.early_stop = False
+        self.counter = 0
+        self.best_model_state = None
+
+    def __call__(self, val_score: float, model: torch.nn.Module):
+        if self.best_score is None:
+            self.best_score = val_score
+            self.best_model_state = model.state_dict()
+        elif val_score < self.best_score + self.delta:
+            self.counter += 1
+            if self.counter >= self.patience:
+                self.early_stop = True
+        else:
+            self.best_score = val_score
+            self.best_model_state = model.state_dict()
+            self.counter = 0
+
+
     
