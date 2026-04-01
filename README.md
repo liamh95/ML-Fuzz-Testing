@@ -1,6 +1,31 @@
-# Warning
+# What is this?
 
-This is the README for the original neuzz++. Don't follow the installation instructions (unless, of course, you want to install their neuzz++).
+This is a partial rewrite of Bosch Research's [neuzz++](github.com/boschresearch/neuzzplusplus), very cleverly called newzz++. The main differences will be
+1. The Python version is now 3.14 instead of 3.8(?)
+2. The ML stuff will be in PyTorch instead of Keras+TensorFlow
+3. ~~The AFL custom mutator will be written in Python instead of C (for now -- if it turns out to be really slow, then it'll be in C)~~
+    1. AFL++ does not expose the same information to a Python mutator as it does to a C mutator. Namely, a C mutator gets access to an `afl_state_t` struct and a Python mutator doesn't (at least not in any way that I can figure out). From what I gather, we need this state to get things like coverage bitmaps and the seed queue. Eventually, I'd like to see if we can still accomplish what we want in Python, but for now, I'm just going to tweak Bosch Research's C mutator.
+
+We also use a slightly modified version their [mlfuzz](https://github.com/boschresearch/mlfuzz/) to compare this fuzzer (newzz++) to AFL, AFL++, the original [neuzz](https://github.com/Dongdongshe/neuzz/) and neuzz++.
+
+# Progress
+
+## In progress
+1. Setting up docker images for the fuzzers.
+    1. Current plan is to have three images: (1) a base image with no Python ML dependencies for AFL and AFL++; (2) a Keras+TensorFlow image for neuzz++ and neuzz; (3) a PyTorch image for newzz++.
+    2. Moving some utilities out of newzz++ and into mlfuzz so the the fuzzers in different images can all access them easily.
+
+
+## To do
+1. Run the fuzzers on some targets (current plan is `curl` and `zlib`) and compare results.
+2. Choose more targets.
+3. Look into writing the mutator in Python (find a way to get around `afl_state_t` being a C-only thing).
+
+## Completed
+1. Rewrote the neuzz++ Keras+TensorFlow code in PyTorch
+2. Updated the C mutator (mostly just for compatibility with the newer version of AFL++; some minor stuff too)
+
+
 
 # Neuzz++ - Neural program smoothing for fuzzing in AFL++
 

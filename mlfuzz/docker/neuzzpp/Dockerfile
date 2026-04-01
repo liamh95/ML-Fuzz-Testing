@@ -8,19 +8,24 @@ RUN apt-get update \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-# Set up Neuzz++
-RUN git clone https://github.com/boschresearch/neuzzplusplus.git /neuzzpp
-WORKDIR "/neuzzpp"
-
-# Apply compatibility patch for newer AFL++
-COPY patches/neuzzpp_aflpp_compat.patch /tmp/
-RUN patch -p1 < /tmp/neuzzpp_aflpp_compat.patch
 
 RUN python3 -m venv /venv && \
     /venv/bin/pip install --upgrade pip && \
     /venv/bin/pip install poetry && \
     /venv/bin/poetry install --no-dev --no-interaction
 ENV PATH=/venv/bin:$PATH
+
+# Set up Neuzz++
+RUN git clone https://github.com/boschresearch/neuzzplusplus.git /neuzzpp
+WORKDIR "/neuzzpp"
+COPY docker/neuzzpp/patches/neuzzpp_deps.patch /tmp/
+COPY docker/neuzzpp/patches/neuzzpp_aflpp_compat.patch /tmp/
+RUN cd /neuzzpp && \
+    patch -p1 < /tmp/neuzzpp_deps.patch && \
+    patch -p1 < /tmp/neuzzpp_aflpp_compat.patch && \
+    rm -f poetry.lock && \
+    /venv/bin/poetry install --no-dev --no-interaction
+
 
 # Build Neuzz++ plugin for AFL++
 ENV AFL_PATH=/aflpp

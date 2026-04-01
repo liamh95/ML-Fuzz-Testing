@@ -1,0 +1,13 @@
+diff --git a/aflpp-plugins/ml-mutator.c b/aflpp-plugins/ml-mutator.c
+index 201d12f..d5c05b2 100644
+--- a/aflpp-plugins/ml-mutator.c
++++ b/aflpp-plugins/ml-mutator.c
+@@ -298,7 +298,7 @@ uint32_t afl_custom_fuzz_count (ml_mutator_state_t *data, const u8 *buf, size_t
+   }
+ 
+   // Cannot use ML model until we have enough seeds 
+-  if(data->afl->queued_paths <= INITIAL_TRAIN_THRESHOLD) {
++  if(data->afl->queued_items <= INITIAL_TRAIN_THRESHOLD) {
+     return 0;
+   }
+ 

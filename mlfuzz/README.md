@@ -1,3 +1,6 @@
+# Warning
+
+Below is the README of the original MLFuzz. Ignore the install instructions (unless, of course, you want to install the original MLFuzz).
 # MLFuzz - fuzzing with machine learning
 
 MLFuzz is a framework that allows benchmarking fuzzers.

@@ -48,7 +48,7 @@ RUN cd /afl && unset CFLAGS && unset CXXFLAGS \
 # This newer commit requires patch to neuzz++'s mutator
 RUN git clone https://github.com/AFLplusplus/AFLplusplus.git /aflpp && \
     cd /aflpp && \
-    git checkout b449e4c544eaac1a0a9b7d1f2f15d5921907585e
+    git checkout v4.40c
 
 # Build without Python support as we don't need it
 # Set AFL_NO_X86 to skip flaky tests

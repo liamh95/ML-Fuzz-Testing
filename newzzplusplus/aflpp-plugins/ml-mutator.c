@@ -308,7 +308,9 @@ uint32_t afl_custom_fuzz_count (ml_mutator_state_t *data, const u8 *buf, size_t 
   }
 
   // Cannot use ML model until we have enough seeds 
-  if(data->afl->queued_paths <= INITIAL_TRAIN_THRESHOLD) {
+  // queued_paths doesn't exist anymore
+  // if(data->afl->queued_paths <= INITIAL_TRAIN_THRESHOLD) {
+  if(data->afl->queued_items <= INITIAL_TRAIN_THRESHOLD) {
     return 0;
   }
 
