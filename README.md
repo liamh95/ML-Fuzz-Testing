@@ -12,7 +12,7 @@ We also use a slightly modified version their [mlfuzz](https://github.com/boschr
 
 ## In progress
 1. Setting up docker images for the fuzzers.
-    1. Current plan is to have three images: (1) a base image with no Python ML dependencies for AFL and AFL++; (2) a Keras+TensorFlow image for neuzz++ and neuzz; (3) a PyTorch image for newzz++.
+    1. Current plan is to have ~~~three~~~ two images: ~~~(1) a base image with no Python ML dependencies for AFL and AFL++;~~~ (2) a Keras+TensorFlow image for neuzz++ and neuzz; (3) a PyTorch image for newzz++. Both images will have their own installs of AFL and/or AFL++.
     2. Moving some utilities out of newzz++ and into mlfuzz so the the fuzzers in different images can all access them easily.
 
 
