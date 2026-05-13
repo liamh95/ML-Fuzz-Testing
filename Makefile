@@ -1,12 +1,12 @@
-.PHONY: images base neuzzpp newzzpp
+.PHONY: images tf torch benchmarks
 
-images: base neuzzpp newzzpp
+images: tf torch
 
-base:
-    docker build -f mlfuzz/docker/base/Dockerfile -t mlfuzz-base:1.0 .
+tf:
+	docker build -f mlfuzz/docker/tf/Dockerfile -t mlfuzz-tf:1.0 .
 
-neuzzpp: base
-    docker build -f mlfuzz/docker/neuzzpp/Dockerfile -t mlfuzz-neuzzpp:1.0 .
+torch:
+	docker build -f mlfuzz/docker/torch/Dockerfile -t mlfuzz-torch:1.0 .
 
-newzzpp: base
-    docker build -f mlfuzz/docker/newzzpp/Dockerfile -t mlfuzz-newzzpp:1.0 .
+benchmarks:
+	cd mlfuzz/benchmarks && make

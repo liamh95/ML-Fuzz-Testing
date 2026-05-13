@@ -129,9 +129,10 @@ venv.bak/
 .dmypy.json
 dmypy.json
 
-# IDE
+# IDE / AI
 .idea/
 .vscode/
+.claude/
 
 # Pyre type checker
 .pyre/
